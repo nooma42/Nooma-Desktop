@@ -2,10 +2,20 @@
      <html>
          <head>
 			 <link rel="stylesheet" href="style.css">
-             <title>
-                 Nooma
-             </title>
+             <title>Nooma</title>
+			 <script src="main.js"></script>
          </head>
          <body>
+			<div id="loginBox">
+				<div id=loginContainer">
+					<img id="logo" src="assets/logo.jpg" alt="">
+					<input class="loginInput" type="text" placeholder="Email" name="email">
+					<input class="loginInput" type="password" placeholder="Password" name="password">
+					<p class="loginText">Forgot Password?</p>
+					<button id="login" onclick="login()">Login</button>
+					<br></br>
+					<p class="loginText">Don't have an account? Sign Up</p>
+				</div>
+			</div>
          </body>
      </html>
