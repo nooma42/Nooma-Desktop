@@ -1,8 +1,17 @@
 
+
 function setResults(data) {
 	if (data != null)
 	{
 		console.log(data);
+		if (data == "true")
+		{
+			window.location.href = 'home.html'
+		}
+		else
+		{
+			
+		}
 	}
 }
 
@@ -14,14 +23,24 @@ function callAjax(callback) {
 			callback(this.responseText);
 		} 
 		else if (this.readyState == 4) {
-			console.log("Error, Question data could not be aquired...");
+			console.log("Error, Couldn't get response");
 		}
 	};
 		
 	ajaxObj.open("POST", "http://localhost:9001/authenticate/", true);
 	ajaxObj.setRequestHeader("Content-Type", "application/json");
 	
-	var body ={"email": "jgold@email.com", "pwd": "X"}
+
+
+var emailInput = document.getElementById("emailInput");
+var passwordInput = document.getElementById("passwordInput");
+
+
+	var body = {};
+	console.log(emailInput.value);
+	body.email = emailInput.value;
+	body.pwd = passwordInput.value;
+	//var body ={"email": "jgold@email.com", "pwd": "X"}
 	var send = JSON.stringify(body);
 	console.log(send);
 	ajaxObj.send(send);
@@ -29,7 +48,7 @@ function callAjax(callback) {
 
 
 function login() {
-	console.log("clicky!");
-	callAjax(setResults);
+	window.location.href = 'home.html'
+	//callAjax(setResults);
 
 }

@@ -1,6 +1,10 @@
 
 @import url(https://fonts.googleapis.com/css?family=Roboto);
 
+*{
+	padding: 0;
+	margin: 0;
+}
 body {
 	background: #473F69;
 	font-family: 'Roboto', sans-serif;
@@ -43,4 +47,23 @@ body {
 .loginText {
 	color: #a5a5a5;
 	font-size: 10px;
+}
+
+#sideBar {
+  height: 100%;
+  width: 250px;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  padding-top: 20px;
+}
+
+#topBar {
+	width: 100%;
+	height: 80px;
+  overflow: hidden;
+  background-color: #333;
 }
