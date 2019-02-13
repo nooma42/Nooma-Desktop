@@ -1,13 +1,34 @@
- <!DOCTYPE html>
- <html>
-	 <head>
-		 <link rel="stylesheet" href="style.css">
-		 <title>Nooma</title>
-		 <script src="renderer.js"></script>
-	 </head>
-	 <body style="background-color: #FFFFFF;">
-		<div id="sideBar"></div>
-		<div id="topBar"><p>SOFT352 - Objects</p></div>
-		<p>Home!</p>
-	 </body>
- </html>
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="style.css">
+    <title>Nooma</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
+    <script src="homeRenderer.js"></script>
+</head>
+
+<body style="background-color: #FFFFFF;">
+    <div id="sideBar"></div>
+    <div id="topBar">
+        <p>SOFT352 - Objects</p>
+    </div>
+    <div id="mainContent">
+        <div class="tab">
+            <button class="tablinks" onclick="changeTab(event, 'JoinCode')">Join Code</button>
+            <button class="tablinks" onclick="changeTab(event, 'Channels')">Channels</button>
+            <button class="tablinks" onclick="changeTab(event, 'Settings')">Settings</button>
+        </div>
+        <div id="JoinCode" class="tabcontent">
+            <p>JoinCode Content!</p>
+        </div>
+        <div id="Channels" class="tabcontent">
+            <p>Channel Content!</p>
+        </div>
+        <div id="Settings" class="tabcontent">
+            <p>Settings Content!</p>
+        </div>
+    </div>
+</body>
+
+</html>
