@@ -45,3 +45,8 @@ function changeTab(evt, tabName) {
 function roomSelect(clickedID) {
 	console.log("click room " + clickedID + "!");
 }
+
+function logout()
+{
+		window.location.href = 'index.html'
+}
