@@ -1,102 +1,116 @@
 <!DOCTYPE html>
 <html>
-
-<head>
-    <link rel="stylesheet" href="style.css">
-    <title>Nooma</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
-    <script src="homeRenderer.js"></script>
-</head>
-
-<body style="background-color: #FFFFFF;">
-    <div id="sideBar">
-		<input id="searchRooms" class="searchInput" type="text" placeholder="Search Rooms..." name="searchRooms">
-		<img id="addRoomBtn" src="assets/add.svg" alt="" height="40" width="40">
-		<ul id="roomList" style="list-style-type:none;">
-			<li id ="5" onclick="roomSelect(this.id)">
-				<p class="roomName">SOFT352 Objects</p>
-				<p class="roomDate">08/01/18</p>
-			</li>
-			<li id ="4" onclick="roomSelect(this.id)">
-				<p class="roomName">SOFT352 - Polymorphism</p>
-				<p class="roomDate">09/01/18</p>
-				
-			</li>
-			<li id ="7" onclick="roomSelect(this.id)">
-				<p class="roomName">Prims lecture on buildings</p>
-				<p class="roomDate">02/01/18</p>
-			</li>
-		</ul>
-		<div class="footer">
-		<hr>
-		<p id="userTxt">User: John Mccain</p>
-		<button id="changePwdBtn">Change Password</button>
-		<button id="logoutBtn" onclick="logout()">Logout</button>
-		</div>
-		
-	</div>
-    <div id="topBar">
-        <p id="roomTitle">SOFT352 - Objects</p>
-    </div>
-    <div id="mainContent">
-        <div class="tab">
+   <head>
+      <link rel="stylesheet" href="style.css">
+      <title>Nooma</title>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
+      <script src="homeRenderer.js"></script>
+   </head>
+   <body style="background-color: #FFFFFF;">
+      <div id="sideBar">
+         <input id="searchRooms" class="searchInput" type="text" placeholder="Search Rooms..." name="searchRooms">
+         <img id="addRoomBtn" src="assets/add.svg" alt="" height="40" width="40">
+         <ul id="roomList" style="list-style-type:none;">
+            <li id ="5" onclick="roomSelect(this.id)">
+               <p class="roomName">SOFT352 Objects</p>
+               <p class="roomDate">08/01/18</p>
+            </li>
+            <li id ="4" onclick="roomSelect(this.id)">
+               <p class="roomName">SOFT352 - Polymorphism</p>
+               <p class="roomDate">09/01/18</p>
+            </li>
+            <li id ="7" onclick="roomSelect(this.id)">
+               <p class="roomName">Prims lecture on buildings</p>
+               <p class="roomDate">02/01/18</p>
+            </li>
+         </ul>
+         <div class="footer">
+            <hr>
+            <p id="userTxt">User: John Mccain</p>
+            <button id="changePwdBtn">Change Password</button>
+            <button id="logoutBtn" onclick="logout()">Logout</button>
+         </div>
+      </div>
+      <div id="topBar">
+         <p id="roomTitle">SOFT352 - Objects</p>
+      </div>
+      <div id="mainContent">
+         <div class="tab">
             <button class="tablinks" onclick="changeTab(event, 'JoinCode')">Join Code</button>
             <button class="tablinks" onclick="changeTab(event, 'Channels')">Channels</button>
             <button class="tablinks" onclick="changeTab(event, 'Settings')">Settings</button>
-        </div>
-        <div id="JoinCode" class="tabcontent">
+         </div>
+         <div id="JoinCode" class="tabcontent">
             <p class="tabTitle">Join Code</p>
-			<div id="joinCodeContainer">
-				<input id="joinCode" class="searchInput" type="text" placeholder="Join Code" name="searchRooms">
-			</div>
-			<canvas id="qrCanvas"></canvas>
-			<p id="joinCodeTxt">Use this Join Code in your presentation to allow users to contribute via their phones.</p>
-        </div>
-        <div id="Channels" class="tabcontent">
-			<select id="channelSelect" name="channels">
-			  <option value="General">General</option>
-			  <option value="saab">Coursework</option>
-			  <option value="fiat">Questions</option>
-			</select>
-			<div id="channelContainer">
-				<div class="messageContainer">
-					<p class="messageTitle">tbradley1 (Tom Bradley) - 3:24PM</p>
-					<p class="messageContent">Wow! What a great lecture! Neat!</p>
-				</div>
-				<div class="messageContainer">
-					<p class="messageTitle">tbradley1 (Tom Bradley) - 3:24PM</p>
-					<p class="messageContent">Wow!! Neat!</p>
-				</div>
-				<div class="messageContainer">
-					<p class="messageTitle">tbradley1 (Tom Bradley) - 3:24PM</p>
-					<p class="messageContent">How does this make me feel?!</p>
-				</div>
-				<div class="messageContainer">
-					<p class="messageTitle">tbradley1 (Tom Bradley) - 3:24PM</p>
-					<p class="messageContent">Oh so that is why that is that! Crazy how that works!</p>
-				</div>
-				<div class="messageContainer">
-					<p class="messageTitle">tbradley1 (Tom Bradley) - 3:24PM</p>
-					<p class="messageContent">No way! that can't be the real X!</p>
-				</div>
-				<div class="messageContainer">
-					<p class="messageTitle">tbradley1 (Tom Bradley) - 3:24PM</p>
-					<p class="messageContent">No way! that can't be the real X!</p>
-				</div>
-				<div class="messageContainer">
-					<p class="messageTitle">tbradley1 (Tom Bradley) - 3:24PM</p>
-					<p class="messageContent">No way! that can't be the real X!</p>
-				</div>
-				<div class="messageContainer">
-					<p class="messageTitle">tbradley1 (Tom Bradley) - 3:24PM</p>
-					<p class="messageContent">No way! that can't be the real X!</p>
-				</div>
-			</div>
-        </div>
-        <div id="Settings" class="tabcontent">
-            <p>Settings Content!</p>
-        </div>
-    </div>
-</body>
-
+            <div id="joinCodeContainer">
+               <input id="joinCode" class="searchInput" type="text" placeholder="Join Code" name="searchRooms">
+            </div>
+            <canvas id="qrCanvas"></canvas>
+            <p id="joinCodeTxt">Use this Join Code in your presentation to allow users to contribute via their phones.</p>
+         </div>
+         <div id="Channels" class="tabcontent">
+            <select id="channelSelect" name="channels">
+               <option value="General">General</option>
+               <option value="saab">Coursework</option>
+               <option value="fiat">Questions</option>
+            </select>
+			<img class="channelIcon" src="assets/delete.svg" alt="">
+			<img class="channelIcon" src="assets/addBlack.svg" alt="">
+            <div id="channelContainer">
+               <div class="messageContainer">
+                  <p class="messageTitle">tbradley1 (Tom Bradley) - 3:24PM</p>
+                  <p class="messageContent">Wow! What a great lecture! Neat!</p>
+                  <img class="deleteMsgBtn" src="assets/cancel.svg" alt="">
+               </div>
+               <div class="messageContainer">
+                  <p class="messageTitle">tbradley1 (Tom Bradley) - 3:24PM</p>
+                  <p class="messageContent">Wow!! Neat!</p>
+                  <img class="deleteMsgBtn" src="assets/cancel.svg" alt="">
+               </div>
+               <div class="messageContainer">
+                  <p class="messageTitle">tbradley1 (Tom Bradley) - 3:24PM</p>
+                  <p class="messageContent">How does this make me feel?!</p>
+                  <img class="deleteMsgBtn" src="assets/cancel.svg" alt="">
+               </div>
+               <div class="messageContainer">
+                  <p class="messageTitle">tbradley1 (Tom Bradley) - 3:24PM</p>
+                  <p class="messageContent">Oh so that is why that is that! Crazy how that works!</p>
+                  <img class="deleteMsgBtn" src="assets/cancel.svg" alt="">
+               </div>
+               <div class="messageContainer">
+                  <p class="messageTitle">tbradley1 (Tom Bradley) - 3:24PM</p>
+                  <p class="messageContent">No way! that can't be the real X!</p>
+                  <img class="deleteMsgBtn" src="assets/cancel.svg" alt="">
+               </div>
+               <div class="messageContainer">
+                  <p class="messageTitle">tbradley1 (Tom Bradley) - 3:24PM</p>
+                  <p class="messageContent">No way! that can't be the real X!</p>
+                  <img class="deleteMsgBtn" src="assets/cancel.svg" alt="">
+               </div>
+               <div class="messageContainer">
+                  <p class="messageTitle">tbradley1 (Tom Bradley) - 3:24PM</p>
+                  <p class="messageContent">No way! that can't be the real X!</p>
+                  <img class="deleteMsgBtn" src="assets/cancel.svg" alt="">
+               </div>
+               <div class="messageContainer">
+                  <p class="messageTitle">tbradley1 (Tom Bradley) - 3:24PM</p>
+                  <p class="messageContent">No way! that can't be the real X!</p>
+                  <img class="deleteMsgBtn" src="assets/cancel.svg" alt="">
+               </div>
+            </div>
+         </div>
+         <div id="Settings" class="tabcontent">
+            <div class="settingDiv">
+               <p class="settingTxt">Channel Name</p>
+               <input id="" class="settingsInput" type="text" placeholder="Channel Name" name="searchRooms">
+            </div>
+            <div class="settingDiv">
+               <p class="settingTxt">Date of Event</p>
+               <input id="" class="settingsInput" type="text" placeholder="Date of Event" name="searchRooms">
+            </div>
+            <button id="settingSaveBtn">Save</button>
+            <button id="removeRoomBtn">Remove Room</button>
+         </div>
+      </div>
+   </body>
 </html>

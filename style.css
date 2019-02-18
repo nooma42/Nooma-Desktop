@@ -1,6 +1,9 @@
 
 @import url(https://fonts.googleapis.com/css?family=Roboto);
 
+html{
+    height:100%;  
+}
 *{
 	padding: 0;
 	margin: 0;
@@ -8,6 +11,9 @@
 body {
 	background: #473F69;
 	font-family: 'Roboto', sans-serif;
+	overflow: hidden;
+	height:100%;  
+	width: 100%;
 }
 
 #loginBox {
@@ -53,6 +59,9 @@ body {
 	border-radius: 10px;
 	padding: 10px;
 	box-sizing: border-box;
+}
+#searchRooms {
+	margin-left:10px;
 }
 
 #addRoomBtn{
@@ -125,7 +134,7 @@ li{
 #mainContent {
 	float: right;
 	width: calc(100% - 260px);
-	height: calc(100% - 85px);
+	height:100%;
 }
 
 .tab {
@@ -154,9 +163,15 @@ li{
 }
 
 .tabcontent {
+	
   display: none;
   padding: 6px 12px;
   border-top: none;
+  height: 100%;
+}
+
+.tab.active {
+  border-bottom: 3px solid red;
 }
 
 #changePwdBtn {
@@ -218,7 +233,6 @@ li{
 #copyBtn {
 	position:relative;
 	 border: 0;
-
  background: none;
  box-shadow: none;
  border-radius: 0px;
@@ -242,17 +256,19 @@ li{
 }
 
 #channelSelect{
-	width:90%;
+	width:80%;
 	padding:10px;
 	 border-radius: 10px;
+	 margin-bottom: 10px;
 }
 
 #channelContainer{
+	max-height: 100%;
 	overflow-y:scroll;
 	border: 1px solid #000;
 	background-color: gray;
 	padding:10px;
-	height:350px;
+
 }
 
 .messageContainer{
@@ -277,6 +293,15 @@ li{
 	font-size: 16px;	
 }
 
+.deleteMsgBtn {
+  height: 30px;
+  width: 30px;
+  right: 3px;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
 #login {
 	  background-color: #4E5FE8; /* Green */
   border: none;
@@ -289,4 +314,69 @@ li{
   font-size: 16px;
    width: 200px;
    margin-top: 5px;
+}
+
+.settingDiv {
+	background-color: #4E5FE8;
+	width: 100%;
+	height: 50px;
+	margin-top:5px;
+}
+#settingSaveBtn {
+ background: none;
+  border: none;
+ box-shadow: none;
+ border-radius: 0px;	
+ 	position:relative;
+	width: 200px;
+	padding:10px;
+	background-color: blue;
+	margin-top:10px;
+	color:white;
+}
+
+.channelIcon {
+	height: 30px;
+	width: 30px;
+	vertical-align:middle;
+}
+
+#removeRoomBtn {
+	background: none;
+	border: none;
+	box-shadow: none;
+	border-radius: 0px;
+	position:absolute;
+	width: calc(100% - 260px);
+	bottom:0;
+	left:260px;
+	height: 50px;
+	background-color: #ff5959;
+	color:white;
+}
+
+.settingsInput{
+		position: relative; 
+	top: 50%;
+	 transform: translateY(-50%);
+	margin: auto;
+	background-color: #f2f2f2;
+	color: #000;
+	width:200px;
+	border: 1px solid #000;
+	border-radius: 10px;
+	padding: 10px;
+	box-sizing: border-box;
+	 float:right; 
+	 margin-right: 10px;
+}
+
+.settingTxt{
+	position: relative; 
+	top: 50%;
+	 transform: translateY(-50%);
+	display: block;
+	float:left;
+	color: white;
+	margin-left: 10px;
 }
