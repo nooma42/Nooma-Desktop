@@ -50,5 +50,8 @@ var passwordInput = document.getElementById("passwordInput");
 function login() {
 	window.location.href = 'home.html'
 	//callAjax(setResults);
+}
 
+function openRegister() {
+	console.log("register Event");
 }

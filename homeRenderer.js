@@ -14,6 +14,26 @@ socket.on('connect', function () {
 	mainContent.appendChild(newMsg);
 });
 
+window.onload = function() {
+	console.log("loaded page!");
+	clearRoomList();
+	getRoomList();
+};
+
+function clearRoomList(){	
+	var roomList = document.getElementById("roomList");
+	while (roomList.hasChildNodes()) {   
+	roomList.removeChild(roomList.firstChild);
+	}
+}
+
+function getRoomList(){
+	
+}
+
+function createRoomList(){
+	
+}
 
 function changeTab(evt, tabName) {
 
@@ -33,7 +53,7 @@ function changeTab(evt, tabName) {
 	var qrCanvas = document.getElementById('qrCanvas');
 
 	
-	QRCode.toCanvas(qrCanvas, 'sample text',{ width: 200 }, function (error) {
+	QRCode.toCanvas(qrCanvas, 'AAAA-AAAA',{ width: 200 }, function (error) {
 	  if (error) console.error(error)
 	  console.log('success!');
 	})	  
