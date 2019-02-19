@@ -4,8 +4,13 @@ const { net } = require('electron')
 
 function createWindow () {
   // Create the browser window.
-  let win = new BrowserWindow({  minHeight: 600,
-  minWidth: 800, nodeIntegration: true, width: 800, height: 600 });
+  let win = new BrowserWindow({  
+  minHeight: 600,
+  minWidth: 800, 
+  nodeIntegration: true,
+  width: 800, 
+  height: 600
+  });
   
   let devtools = new BrowserWindow();
    win.webContents.setDevToolsWebContents(devtools.webContents)

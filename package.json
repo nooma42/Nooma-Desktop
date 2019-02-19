@@ -19,6 +19,7 @@
   "homepage": "https://github.com/nooma42/Nooma-Desktop#readme",
   "dependencies": {
     "electron": "^4.0.4",
-    "qrcode": "^1.3.3"
+    "qrcode": "^1.3.3",
+    "toastr": "^2.1.4"
   }
 }

@@ -47,9 +47,9 @@ body {
     margin-right: auto;	
 	height: 100px;
 	width: 100px; 	
+	margin-bottom: 10px;
 }
 #loginContainer{
-	width:200px;
 }
 .loginInput {
 	background-color: #f2f2f2;
@@ -319,7 +319,7 @@ li{
   transform: translateY(-50%);
 }
 
-#login {
+#loginBtn {
 	  background-color: #4E5FE8; /* Green */
   border: none;
   color: white;
@@ -395,4 +395,33 @@ li{
 	display: block;
 	float:left;
 	margin-left: 10px;
+}
+
+#registerContainer {
+  display: none;
+}
+
+#backRegister {
+	position: absolute;
+	left: 0;
+	top: 0;
+	margin-top:10px;
+	margin-left:10px;
+	width:30px;
+	height:30px;
+}
+
+#registerBtn {
+	
+  background-color: #4E5FE8; /* Green */
+  border: none;
+  color: white;
+  padding: 12px 20px;
+  text-align: center;
+  text-decoration: none;
+    margin:0 auto;
+    display:block;
+  font-size: 16px;
+   width: 200px;
+   margin-top: 10px;
 }
