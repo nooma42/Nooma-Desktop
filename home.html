@@ -10,7 +10,7 @@
    </head>
    <body style="background-color: #FFFFFF;">
       <div id="sideBar">
-         <input id="searchRooms" class="searchInput" type="text" placeholder="Search Rooms..." name="searchRooms">
+         <input id="searchRooms" class="searchInput" type="text" placeholder="Search Rooms..." name="searchRooms" value="">
          <img id="addRoomBtn" src="assets/add.svg" alt="" height="40" width="40">
          <ul id="roomList" style="list-style-type:none;">
             <li id ="5" onclick="roomSelect(this.id)">
@@ -29,8 +29,8 @@
          <div class="footer">
             <hr>
             <p id="userTxt">User: John Mccain</p>
-            <button id="changePwdBtn">Change Password</button>
-           <!--  <button id="logoutBtn" onclick="logout()">Logout</button>-->
+            <!--  <button id="changePwdBtn">Change Password</button>-->
+           <button id="logoutBtn" onclick="logout()">Logout</button>
          </div>
       </div>
       <div id="topBar">
@@ -114,7 +114,7 @@
             <button id="removeRoomBtn">Remove Room</button>
          </div>
 		 <div id="Default" class="tabcontent">
-			<p>Select a Room to begin!</p>
+			<p  id="joinCodeTxt">Select a Room to begin!</p>
 		 </div>
       </div>
    </body>
