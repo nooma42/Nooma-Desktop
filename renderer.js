@@ -8,6 +8,7 @@ function setResults(data) {
 			toastr.error("Problem logging in!");
 			return;
 		}
+		console.log(data);
 		var response = JSON.parse(data);
 		if (response.userID)
 		{

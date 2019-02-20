@@ -1,5 +1,5 @@
 var QRCode = require('qrcode');
-
+var userID; 
 
 socket = io.connect('http://localhost:9001', {
 		'connect timeout': 5000,
@@ -15,7 +15,8 @@ socket.on('connect', function () {
 });
 
 window.onload = function() {
-	console.log("loaded page!");
+	userID = localStorage.getItem("userID");
+	console.log("loaded page! " + userID);
 	clearRoomList();
 	getRoomList();
 };
@@ -28,7 +29,10 @@ function clearRoomList(){
 }
 
 function getRoomList(){
-	
+	if(userID != null)
+	{
+		
+	}
 }
 
 function createRoomList(){
