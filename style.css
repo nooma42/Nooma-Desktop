@@ -117,6 +117,10 @@ li{
 	border-bottom: 1px solid #FFF;
 }
 
+.selectedRoom  {
+	  background-color: #4a5477;
+}
+
 .roomDate{
 	font-size: 12px;
 }
@@ -131,6 +135,7 @@ li{
 	bottom: 0;
     height: 100px;
     width: 260px;
+	background-color:#311B92;
 }
 
 #sideBar {
@@ -140,7 +145,7 @@ li{
   z-index: 1;
   top: 0;
   left: 0;
-  background-color: #3B4465;
+  background-color: #7E57C2;
   display: flex;
     flex-wrap:wrap;
 	overflow:hidden;
@@ -152,7 +157,7 @@ li{
 	width: calc(100% - 260px);
 	height: 60px;
   overflow: hidden;
-  background-color: #4E5FE8;
+  background-color: #673AB7;
 }
 
 #mainContent {
@@ -163,7 +168,7 @@ li{
 
 .tab {
   overflow: hidden;
-  background-color: #f1f1f1;
+  background-color: #EDE7F6;
 }
 
 .tab button {
@@ -212,7 +217,7 @@ li{
 }
 
 #logoutBtn {
-  background-color: #003F91; /* Green */
+  background-color: #B388FF;
   border: none;
   color: white;
   padding: 12px 32px;
@@ -226,6 +231,7 @@ li{
 }
 
 #userTxt {
+	margin-top: 10px;
 	margin-left: 10px;
 	margin-bottom: 8px;
 	color: white;

@@ -141,7 +141,27 @@ function changeTab(evt, tabName) {
 function roomSelect(roomElement) {
 	roomIndex = roomElement.id;
 	console.log("click room " + roomIndex + "!");
-	roomElement.style.backgroundColor = "red";
+	
+  Array.prototype.slice.call(document.querySelectorAll('li')).forEach(function(element){
+    // remove the selected class
+    element.classList.remove('selectedRoom');
+  });
+	
+		var joinCode = roomData[roomIndex].joinCode;
+		document.getElementById("joinCode").value = joinCode;
+		var qrCanvas = document.getElementById('qrCanvas');
+
+	
+	QRCode.toCanvas(qrCanvas, joinCode,{ width: 200 }, function (error) {
+	  if (error) console.error(error)
+	  console.log('success!');
+	})	  
+		
+	//set settings fields
+	document.getElementById("channelNameInput").value = roomData[roomIndex].roomName;
+	document.getElementById("eventDateInput").value = roomData[roomIndex].eventDate;
+	
+	roomElement.classList.add("selectedRoom");
 	
 	setTitle(roomData[roomIndex].roomName);
 	
