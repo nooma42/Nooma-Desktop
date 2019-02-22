@@ -177,3 +177,57 @@ function logout()
 {
 		window.location.href = 'index.html'
 }
+
+function saveRoomSettings()
+{
+	console.log("save room settings!");
+	var channelName = document.getElementById("channelNameInput").value;
+	var eventDate = document.getElementById("eventDateInput").value;
+	console.log(channelName + " - " + eventDate);
+	
+	//roomIndex
+}
+
+
+function confirmRoomDeletion(data) {
+	console.log(data);
+	if (data != null)
+	{
+		var response = JSON.parse(data);
+		console.log(response[0].status);
+		if (response[0].status == "Success")
+		{
+			var toastr = require("toastr");
+			toastr.success("Room Deleted Successfully!");
+			clearRoomList();
+			getRoomList(createRoomList);
+			setTitle("");
+		}
+	}
+}
+
+function removeRoom()
+{
+	 var ajaxObj = new XMLHttpRequest();
+       ajaxObj.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                console.log(" complete!");
+                confirmRoomDeletion(this.responseText);
+            } else if (this.readyState == 4) {
+                console.log("Error, Couldn't get response");
+            }
+        };
+		
+	var roomID = roomData[roomIndex].roomID;
+	ajaxObj.open("DELETE", "http://localhost:9001/rooms/"+roomID, true);
+    ajaxObj.setRequestHeader("Content-Type", "application/json");
+
+    ajaxObj.send();
+}
+
+function addRoomOverlay()
+{
+	var modal = document.getElementById('myModal');
+	
+	modal.style.display = "block";
+}
