@@ -109,12 +109,14 @@ hr {
 
 ul{
 	margin: 10px;
+	margin-right: 0px;
+	margin-left: 0px;
 	color: white;
 }
 
 li{
 	padding: 10px;
-	border-bottom: 1px solid #FFF;
+	border-bottom: 1px solid #d3d3d3;
 }
 
 .selectedRoom  {
@@ -189,6 +191,7 @@ li{
 
 #addRoomBtn {
 	display: inline-block;
+	margin-left:4px;
 }
 
 .tabcontent {

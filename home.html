@@ -103,7 +103,7 @@
          <div id="Settings" class="tabcontent">
             <div class="settingDiv">
                <p class="settingTxt">Channel Name</p>
-               <input id="channelNameInput" class="settingsInput" type="text" placeholder="Channel Name" name="searchRooms">
+               <input id="roomNameInput" class="settingsInput" type="text" placeholder="Room Name" name="searchRooms">
             </div>
             <div class="settingDiv">
                <p class="settingTxt">Date of Event</p>
@@ -120,7 +120,10 @@
          <!-- Modal content -->
          <div class="modal-content">
             <span class="close">&times;</span>
-            <p>Some text in the Modal..</p>
+            <p class="popupTitle">Add Room</p>
+			<input id="newRoomNameInput" class="" type="text" placeholder="Room Name" name="newRoomName">
+			<input id="newRoomDateInput" class="" type="text" placeholder="Event Date" name="newRoomDate">
+			<button id="" onclick="addRoom()">Add Room</button>
          </div>
       </div>
    </body>

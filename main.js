@@ -2,6 +2,9 @@ const { app, BrowserWindow } = require('electron');
 const {ipcMain} = require('electron')
 const { net } = require('electron')
 
+const nativeImage = require('electron').nativeImage;
+ var img = nativeImage.createFromPath(__dirname + '/assets/logoTom.png'); 
+ 
 function createWindow () {
   // Create the browser window.
   let win = new BrowserWindow({  
@@ -9,7 +12,8 @@ function createWindow () {
   minWidth: 800, 
   nodeIntegration: true,
   width: 800, 
-  height: 600
+  height: 600,
+  icon: img
   });
   
   let devtools = new BrowserWindow();

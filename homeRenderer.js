@@ -2,7 +2,8 @@ var QRCode = require('qrcode');
 var userID; 
 var roomData;
 var roomIndex;
-
+var toastr = require("toastr");
+			
 socket = io.connect('http://localhost:9001', {
 		'connect timeout': 5000,
 		'reconnectionAttempts': 3
@@ -107,8 +108,9 @@ function createRoomList(data) {
 
 function changeTab(evt, tabName) {
 
-  if (roomIndex == undefined)
+  if (roomIndex == undefined || roomIndex == null)
   {
+	toastr.warning("Select a room to view first");
 	return;  
   }
   
@@ -158,7 +160,7 @@ function roomSelect(roomElement) {
 	})	  
 		
 	//set settings fields
-	document.getElementById("channelNameInput").value = roomData[roomIndex].roomName;
+	document.getElementById("roomNameInput").value = roomData[roomIndex].roomName;
 	document.getElementById("eventDateInput").value = roomData[roomIndex].eventDate;
 	
 	roomElement.classList.add("selectedRoom");
@@ -175,17 +177,72 @@ function setTitle(title)
 
 function logout()
 {
-		window.location.href = 'index.html'
+	window.location.href = 'index.html'
+}
+
+
+function confirmRoomEdit(data)
+{
+	console.log(data);
+	if (data != null)
+	{
+		var response = JSON.parse(data);
+		console.log(response[0].status);
+		if (response[0].status == "Success")
+		{
+			
+			toastr.success("Room Edited Successfully!");
+			
+			clearRoomList();
+			getRoomList(createRoomList);
+		}
+	}	
 }
 
 function saveRoomSettings()
 {
-	console.log("save room settings!");
-	var channelName = document.getElementById("channelNameInput").value;
-	var eventDate = document.getElementById("eventDateInput").value;
-	console.log(channelName + " - " + eventDate);
 	
-	//roomIndex
+	var ajaxObj = new XMLHttpRequest();
+	ajaxObj.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status == 200) {
+			console.log(" complete!");
+			confirmRoomEdit(this.responseText);
+		} else if (this.readyState == 4) {
+			console.log("Error, Couldn't get response");
+		}
+	};
+	
+	console.log("save room settings!");
+	var roomName = document.getElementById("roomNameInput").value;
+	var eventDate = document.getElementById("eventDateInput").value;
+	
+	var roomID = roomData[roomIndex].roomID;
+
+		
+	ajaxObj.open("PUT", "http://localhost:9001/rooms/"+roomID, true);
+    ajaxObj.setRequestHeader("Content-Type", "application/json");
+	
+	var body = {};
+	body.roomName = roomName;
+	body.eventDate = eventDate;
+	
+	var send = JSON.stringify(body);
+	console.log(send);
+	ajaxObj.send(send);	
+
+}
+
+
+function resetTabs()
+{
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }	
+  
+  document.getElementById("Default").style.display = "block";
+  
 }
 
 
@@ -197,11 +254,12 @@ function confirmRoomDeletion(data) {
 		console.log(response[0].status);
 		if (response[0].status == "Success")
 		{
-			var toastr = require("toastr");
 			toastr.success("Room Deleted Successfully!");
 			clearRoomList();
 			getRoomList(createRoomList);
 			setTitle("");
+			roomIndex = null;
+			resetTabs();
 		}
 	}
 }
@@ -230,4 +288,54 @@ function addRoomOverlay()
 	var modal = document.getElementById('myModal');
 	
 	modal.style.display = "block";
+}
+
+
+
+function confirmRoomAddition(data) {
+	console.log(data);
+	if (data != null)
+	{
+		var response = JSON.parse(data);
+		console.log(response[0].status);
+		if (response[0].status == "Success")
+		{
+			
+			toastr.success("Room Added Successfully!");
+			
+			var modal = document.getElementById('myModal');
+			modal.style.display = "none";
+			
+			clearRoomList();
+			getRoomList(createRoomList);
+		}
+	}
+}
+
+
+function addRoom()
+{
+	 var ajaxObj = new XMLHttpRequest();
+       ajaxObj.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                console.log(" complete!");
+				confirmRoomAddition(this.responseText);
+            } else if (this.readyState == 4) {
+                console.log("Error, Couldn't get response");
+            }
+        };
+		
+	ajaxObj.open("POST", "http://localhost:9001/rooms/"+userID, true);
+    ajaxObj.setRequestHeader("Content-Type", "application/json");
+	
+	var body = {};
+	var newRoomName = document.getElementById("newRoomNameInput").value;
+	var newRoomDate = document.getElementById("newRoomDateInput").value;
+	
+	body.roomName = newRoomName;
+	body.eventDate = newRoomDate;
+	
+	var send = JSON.stringify(body);
+	console.log(send);
+	ajaxObj.send(send);
 }
