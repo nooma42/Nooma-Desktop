@@ -286,9 +286,36 @@ function removeRoom()
 
 function addRoomOverlay()
 {
-	var modal = document.getElementById('myModal');
+	var modalContent = document.createElement("div");
+	modalContent.classList.add('modal-content');
+
+	var closeModalBtn = document.createElement("span");
+	closeModalBtn.classList.add('close');
+	closeModalBtn.innerHTML = "&times;";
+	closeModalBtn.onclick = function() {closeModal()};
 	
-	modal.style.display = "block";
+	var modalTitle = document.createElement("p");
+	modalTitle.classList.add('popupTitle');
+	modalTitle.innerHTML = "Add Room";
+	
+	var roomNameInput = document.createElement("input");
+	roomNameInput.id = "newRoomNameInput";
+
+	var roomDateInput = document.createElement("input");
+	roomDateInput.id = "newRoomDateInput";
+	
+	var addModalBtn  = document.createElement("button");
+	addModalBtn.id = "addRoomModBtn";
+	addModalBtn.onclick = function(){addRoom()};
+	addModalBtn.innerHTML = "Add Room";
+	
+	modalContent.appendChild(closeModalBtn);
+	modalContent.appendChild(modalTitle);
+	modalContent.appendChild(roomNameInput);
+	modalContent.appendChild(roomDateInput);
+	modalContent.appendChild(addModalBtn);
+
+	createModal(modalContent);
 }
 
 
@@ -440,6 +467,9 @@ function channelResponse(data)
 
 function getChannels(roomID)
 {
+			var channelContainer = document.getElementById("channelContainer");
+		channelContainer.innerHTML = "";
+		
 	 var ajaxObj = new XMLHttpRequest();
        ajaxObj.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
