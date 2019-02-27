@@ -545,8 +545,71 @@ function deleteChannel()
 	 
 }
 
+function channelAddResponse(data)
+{
+	if(data != null)
+	{
+		var response = JSON.parse(data);
+		
+		if (response[0].status == "Success")
+		{
+			toastr.success("Channel Added Successfully!");
+			closeModal();
+			getChannels(roomData[roomIndex].roomID);
+		}
+	}
+}
+
+function confirmAddChannel()
+{
+	var channelName = document.getElementById("newChannelNameInput").value;
+	
+	 var ajaxObj = new XMLHttpRequest();
+       ajaxObj.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                console.log(" complete!");
+				channelAddResponse(this.responseText);
+            } else if (this.readyState == 4) {
+                console.log("Error, Couldn't get response");
+            }
+        };
+		
+	ajaxObj.open("POST", "http://localhost:9001/channels/"+roomData[roomIndex].roomID, true);
+    ajaxObj.setRequestHeader("Content-Type", "application/json");
+
+	var body = {};
+	body.channelName = channelName;
+	
+	var send = JSON.stringify(body);
+	ajaxObj.send(send);	
+}
+
 function addChannel()
 {
-	var modal = document.getElementById('myModal');
-	modal.style.display = "block";
+	var modalContent = document.createElement("div");
+	modalContent.classList.add('modal-content');
+
+	var closeModalBtn = document.createElement("span");
+	closeModalBtn.classList.add('close');
+	closeModalBtn.innerHTML = "&times;";
+	closeModalBtn.onclick = function() {closeModal()};
+	
+	var modalTitle = document.createElement("p");
+	modalTitle.classList.add('popupTitle');
+	modalTitle.innerHTML = "Add Channel";
+	
+	var channelNameInput = document.createElement("input");
+	channelNameInput.id = "newChannelNameInput";
+
+	var addModalBtn  = document.createElement("button");
+	addModalBtn.id = "addModalBtn";
+	addModalBtn.onclick = function(){confirmAddChannel()};
+	addModalBtn.innerHTML = "Add Channel";
+	
+	modalContent.appendChild(closeModalBtn);
+	modalContent.appendChild(modalTitle);
+	modalContent.appendChild(channelNameInput);
+	modalContent.appendChild(addModalBtn);
+
+	createModal(modalContent);
 }

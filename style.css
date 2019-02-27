@@ -544,3 +544,16 @@ li{
 	font-size: 18px;
 	margin-top: 10px;
 }
+
+#addModalBtn {
+ background: none;
+  border: none;
+ box-shadow: none;
+ border-radius: 0px;	
+ 	position:relative;
+	width: 200px;
+	padding:10px;
+	background-color: blue;
+	margin-top:10px;
+	color:white;
+}
