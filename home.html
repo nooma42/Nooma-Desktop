@@ -50,13 +50,13 @@
             <p id="joinCodeTxt">Use this Join Code in your presentation to allow users to contribute via their phones.</p>
          </div>
          <div id="Channels" class="tabcontent">
-            <select id="channelSelect" name="channels">
+            <select id="channelSelect" name="channels" onchange="getChannelChat()">
                <option value="General">General</option>
                <option value="saab">Coursework</option>
                <option value="fiat">Questions</option>
             </select>
-            <img class="channelIcon" src="assets/delete.svg" alt="">
-            <img class="channelIcon" src="assets/addBlack.svg" alt="">
+            <img class="channelIcon" src="assets/delete.svg" alt="" onclick="deleteChannel()">
+            <img class="channelIcon" src="assets/addBlack.svg" alt="" onclick="addChannel()">
             <div id="channelContainer">
                <div class="messageContainer">
                   <p class="messageTitle">tbradley1 (Tom Bradley) - 3:24PM</p>
@@ -119,11 +119,11 @@
       <div id="myModal" class="modal">
          <!-- Modal content -->
          <div class="modal-content">
-            <span class="close">&times;</span>
+            <span class="close" onclick="closeModal()">&times;</span>
             <p class="popupTitle">Add Room</p>
 			<input id="newRoomNameInput" class="" type="text" placeholder="Room Name" name="newRoomName">
 			<input id="newRoomDateInput" class="" type="text" placeholder="Event Date" name="newRoomDate">
-			<button id="" onclick="addRoom()">Add Room</button>
+			<button id="addRoomModBtn" onclick="addRoom()">Add Room</button>
          </div>
       </div>
    </body>

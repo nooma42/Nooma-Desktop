@@ -166,6 +166,7 @@ function roomSelect(roomElement) {
 	roomElement.classList.add("selectedRoom");
 	
 	setTitle(roomData[roomIndex].roomName);
+	getChannels(roomData[roomIndex].roomID);
 	
 }
 
@@ -338,4 +339,179 @@ function addRoom()
 	var send = JSON.stringify(body);
 	console.log(send);
 	ajaxObj.send(send);
+}
+
+
+function createMessage(messageData)
+{
+	var messageContainer = document.createElement("div");
+	messageContainer.classList.add('messageContainer');
+	
+	
+	var messageTitle = document.createElement("p");
+	messageTitle.classList.add('messageTitle');
+	messageTitle.innerHTML = messageData.username;
+	
+	var messageContent = document.createElement("p");
+	messageContent.classList.add('messageContent');
+	messageContent.innerHTML = messageData.messageContent;
+	
+	var deleteBtn = document.createElement("img");
+	deleteBtn.classList.add('deleteMsgBtn');
+	deleteBtn.src = "assets/cancel.svg";
+	deleteBtn.onclick = "removeMessage()";
+	
+	messageContainer.appendChild(messageTitle);
+	messageContainer.appendChild(messageContent);
+	messageContainer.appendChild(deleteBtn);
+	
+	return messageContainer;
+}
+
+function channelChatResponse(data)
+{
+	if (data != null)
+	{
+		var response = JSON.parse(data);
+		
+		//reset message contents...
+		var channelContainer = document.getElementById("channelContainer");
+		channelContainer.innerHTML = "";
+		console.log(response.length);
+		for (var i = 0; i < response.length; i++)
+		{
+			var message = createMessage(response[i]);
+			console.log(message);
+			channelContainer.appendChild(message);
+		}
+	}
+}
+
+function getChannelChat()
+{
+	var channelID = document.getElementById("channelSelect").value;
+	
+	 var ajaxObj = new XMLHttpRequest();
+       ajaxObj.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                console.log(" complete!");
+				channelChatResponse(this.responseText);
+            } else if (this.readyState == 4) {
+                console.log("Error, Couldn't get response");
+            }
+        };
+		
+	ajaxObj.open("GET", "http://localhost:9001/channelMessages/"+channelID, true);
+    ajaxObj.setRequestHeader("Content-Type", "application/json");
+
+	ajaxObj.send();
+}
+
+function channelResponse(data)
+{
+	if (data != null)
+	{
+		var response = JSON.parse(data);
+		
+		var channelSelecter = document.getElementById("channelSelect");
+		channelSelecter.innerHTML = '';
+		console.log(response.length);
+		for (var i = 0; i < response.length; i++)
+		{
+			console.log(response[i].channelID + " - " + response[i].channelName);
+			var channel = document.createElement("option");
+			channel.value = response[i].channelID;
+			channel.text = response[i].channelName;
+			channelSelecter.appendChild(channel);
+		}
+		
+		//if there is atleast one, load the first channels chat history
+		if(response.length > 0)
+		{
+			getChannelChat(response[0].channelID);
+		}
+	}
+}
+
+function getChannels(roomID)
+{
+	 var ajaxObj = new XMLHttpRequest();
+       ajaxObj.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                console.log(" complete!");
+				channelResponse(this.responseText);
+            } else if (this.readyState == 4) {
+                console.log("Error, Couldn't get response");
+            }
+        };
+		
+	ajaxObj.open("GET", "http://localhost:9001/channels/"+roomID, true);
+    ajaxObj.setRequestHeader("Content-Type", "application/json");
+
+	ajaxObj.send();	
+}
+
+function closeModal()
+{
+	var modal = document.getElementById('myModal');
+	modal.style.display = "none";
+}
+
+function createModal(modalContent)
+{
+	var modal = document.getElementById('myModal');
+	modal.innerHTML = "";
+
+	modal.appendChild(modalContent);
+	
+	modal.style.display = "block";
+}
+
+function confirmDeleteChannel()
+{
+	console.log("delete channel!");
+}
+
+function deleteChannel()
+{
+	var channelSelect = document.getElementById("channelSelect");
+	
+	var channelID = channelSelect.value;	
+	var i = channelSelect.selectedIndex;
+    var channelName = channelSelect.options[i].text;
+	
+	var modalContent = document.createElement("div");
+	modalContent.classList.add('modal-content');
+
+	var closeModalBtn = document.createElement("span");
+	closeModalBtn.classList.add('close');
+	closeModalBtn.innerHTML = "&times;";
+	closeModalBtn.onclick = function() {closeModal()};
+	
+	var modalTitle = document.createElement("p");
+	modalTitle.classList.add('popupTitle');
+	modalTitle.innerHTML = "Delete Channel";
+	
+	var deleteModalContent = document.createElement("p");
+	deleteModalContent.id = "modalText";
+	deleteModalContent.innerHTML = "Are you sure you want to delete the \"" + channelName + "\" channel for the \"" + roomData[roomIndex].roomName + "\" room?";
+	
+	var deleteModalBtn = document.createElement("button");
+	deleteModalBtn.id = "deleteModalBtn";
+	deleteModalBtn.onclick = "confirmDeleteChannel()";
+	deleteModalBtn.innerHTML = "Delete Channel";
+	
+	modalContent.appendChild(closeModalBtn);
+	modalContent.appendChild(modalTitle);
+	modalContent.appendChild(deleteModalContent);
+	modalContent.appendChild(deleteModalBtn);
+	
+	createModal(modalContent);
+	 
+}
+
+function addChannel()
+{
+	var modal = document.getElementById('myModal');
+	modal.style.display = "block";
 }
