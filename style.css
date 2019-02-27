@@ -509,6 +509,7 @@ li{
 	color: #000;
 	width:200px;
 	margin-top: 10px;
+	border: 1px solid #000;
 	border-radius: 10px;
 	box-sizing: border-box;
 	padding: 10px;	

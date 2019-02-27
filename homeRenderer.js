@@ -391,6 +391,11 @@ function getChannelChat()
 {
 	var channelID = document.getElementById("channelSelect").value;
 	
+	if (channelID == undefined)
+	{
+		return;
+	}
+	
 	 var ajaxObj = new XMLHttpRequest();
        ajaxObj.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
@@ -467,9 +472,39 @@ function createModal(modalContent)
 	modal.style.display = "block";
 }
 
-function confirmDeleteChannel()
+function channelDeleteResponse(data)
 {
-	console.log("delete channel!");
+	console.log("data:" +data);
+	if(data != null)
+	{
+		var response = JSON.parse(data);
+		if (response[0].status == "Success")
+		{
+			toastr.success("Channel Deleted Successfully!");
+			closeModal();
+			getChannels(roomData[roomIndex].roomID);
+		}
+	}
+}
+
+function confirmDeleteChannel(channelID)
+{ 
+	console.log("delete channel id " + channelID);
+	
+	 var ajaxObj = new XMLHttpRequest();
+       ajaxObj.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                console.log(" complete!");
+				channelDeleteResponse(this.responseText);
+            } else if (this.readyState == 4) {
+                console.log("Error, Couldn't get response");
+            }
+        };
+		
+	ajaxObj.open("DELETE", "http://localhost:9001/channel/"+channelID, true);
+    ajaxObj.setRequestHeader("Content-Type", "application/json");
+
+	ajaxObj.send();		
 }
 
 function deleteChannel()
@@ -498,7 +533,7 @@ function deleteChannel()
 	
 	var deleteModalBtn = document.createElement("button");
 	deleteModalBtn.id = "deleteModalBtn";
-	deleteModalBtn.onclick = "confirmDeleteChannel()";
+	deleteModalBtn.onclick = function(){confirmDeleteChannel(channelID)};
 	deleteModalBtn.innerHTML = "Delete Channel";
 	
 	modalContent.appendChild(closeModalBtn);
