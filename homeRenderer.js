@@ -151,6 +151,8 @@ function roomSelect(roomElement) {
 	roomIndex = roomElement.id;
 	console.log("click room " + roomIndex + "!");
 	
+	 $( "#tabs" ).show( "slide", { direction: "up" }, "slow" );
+	 
   Array.prototype.slice.call(document.querySelectorAll('li')).forEach(function(element){
     // remove the selected class
     element.classList.remove('selectedRoom');
@@ -174,7 +176,7 @@ function roomSelect(roomElement) {
 	
 	setTitle(roomData[roomIndex].roomName);
 	getChannels(roomData[roomIndex].roomID);
-	
+	changeTab(null, "Channels");
 }
 
 
@@ -243,6 +245,7 @@ function saveRoomSettings()
 
 function resetTabs()
 {
+ $( "#tabs" ).hide( "slide", { direction: "up" }, "slow" );
   var i, tabcontent, tablinks;
   tabcontent = document.getElementsByClassName("tabcontent");
   for (i = 0; i < tabcontent.length; i++) {
