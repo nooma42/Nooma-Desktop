@@ -13,6 +13,10 @@ input, button, textarea, :focus {
     outline: none; // You should add some other style for :focus to help UX/a11y
 }
 
+input[readonly] {
+     cursor: pointer;
+}
+
 html{
     height:100%;  
 }
@@ -502,6 +506,7 @@ li{
 	color: #A9A9A9;
 }
 
+#newChannelNameInput,
 #newRoomDateInput,
 #newRoomNameInput {
 	display: block;

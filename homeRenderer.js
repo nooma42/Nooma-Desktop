@@ -11,12 +11,19 @@ socket = io.connect('http://localhost:9001', {
 	
 	
 socket.on('connect', function () {
+	console.log("I HAVE CONNECTED TO SOCKET!");
 	var mainContent = document.getElementById("mainContent")
 	var newMsg = document.createElement("p");
 	newMsg.innerHTML = "Connected!";
-	//mainContent.appendChild(newMsg);
+	mainContent.appendChild(newMsg);
 });
 
+	socket.on('chat', function (messageData) {
+		console.log("I HAVE RECIEVED A MESSAGE!");
+		var msg = createMessage(messageData);
+		var channelContainer = document.getElementById("channelContainer");
+		channelContainer.insertBefore(msg, channelContainer.firstChild);
+	});
 
 window.onload = function() {
 	
@@ -267,6 +274,7 @@ function confirmRoomDeletion(data) {
 
 function removeRoom()
 {
+	console.log("close");
 	 var ajaxObj = new XMLHttpRequest();
        ajaxObj.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
@@ -282,6 +290,13 @@ function removeRoom()
     ajaxObj.setRequestHeader("Content-Type", "application/json");
 
     ajaxObj.send();
+}
+
+function openPicker(idVal)
+{
+	//get current date, so that dates in the past can't be picked
+	var dateToday = new Date();
+	$( "#" + idVal).datepicker({minDate: dateToday, dateFormat: 'dd/mm/y' }).datepicker("show");
 }
 
 function addRoomOverlay()
@@ -300,9 +315,13 @@ function addRoomOverlay()
 	
 	var roomNameInput = document.createElement("input");
 	roomNameInput.id = "newRoomNameInput";
+	roomNameInput.placeholder = "Room Name";
 
 	var roomDateInput = document.createElement("input");
 	roomDateInput.id = "newRoomDateInput";
+	roomDateInput.placeholder = "Event Date";
+	roomDateInput.readOnly = true;
+	roomDateInput.onclick = function(){openPicker(roomDateInput.id)}
 	
 	var addModalBtn  = document.createElement("button");
 	addModalBtn.id = "addRoomModBtn";
@@ -371,6 +390,7 @@ function addRoom()
 
 function createMessage(messageData)
 {
+	console.log("same!");
 	var messageContainer = document.createElement("div");
 	messageContainer.classList.add('messageContainer');
 	
@@ -630,6 +650,7 @@ function addChannel()
 	
 	var channelNameInput = document.createElement("input");
 	channelNameInput.id = "newChannelNameInput";
+	channelNameInput.placeholder = "Channel Name";
 
 	var addModalBtn  = document.createElement("button");
 	addModalBtn.id = "addModalBtn";

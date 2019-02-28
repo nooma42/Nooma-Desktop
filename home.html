@@ -4,8 +4,12 @@
       <link rel="stylesheet" href="style.css">
       <link href="toastr.css" rel="stylesheet"/>
       <title>Nooma</title>
+	  <script>window.$ = window.jQuery = require('./jquery-3.3.1.min.js');</script>
+	  <script src="./jquery-ui.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
       <script src="homeRenderer.js"></script>
+	  <link rel="stylesheet" href="jquery-ui.min.css">
+	  <link rel="stylesheet" href="jquery-ui.min.css">
       <link rel="stylesheet" href="node_modules/toastr/build/toastr.css">
    </head>
    <body style="background-color: #FFFFFF;">
@@ -107,7 +111,7 @@
             </div>
             <div class="settingDiv">
                <p class="settingTxt">Date of Event</p>
-               <input id="eventDateInput" class="settingsInput" type="text" placeholder="Date of Event" name="searchRooms">
+               <input id="eventDateInput" onclick="openPicker('eventDateInput')" class="settingsInput" type="text" placeholder="Date of Event" name="searchRooms" readonly>
             </div>
             <button id="settingSaveBtn" onclick="saveRoomSettings()">Save</button>
             <button id="removeRoomBtn" onclick="removeRoom()">Remove Room</button>
