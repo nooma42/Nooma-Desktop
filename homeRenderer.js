@@ -9,17 +9,19 @@ socket = io.connect('http://localhost:9001', {
 		'reconnectionAttempts': 3
 	});
 	
-	
+function connectToChannel(channelID)
+{
+	console.log("connecting to channel: " + channelID);
+	socket.emit('channel', channelID);
+}
+
 socket.on('connect', function () {
 	console.log("I HAVE CONNECTED TO SOCKET!");
-	var mainContent = document.getElementById("mainContent")
-	var newMsg = document.createElement("p");
-	newMsg.innerHTML = "Connected!";
-	mainContent.appendChild(newMsg);
 });
 
 	socket.on('chat', function (messageData) {
 		console.log("I HAVE RECIEVED A MESSAGE!");
+		console.log(messageData.sendDate);
 		var msg = createMessage(messageData);
 		var channelContainer = document.getElementById("channelContainer");
 		channelContainer.insertBefore(msg, channelContainer.firstChild);
@@ -398,9 +400,16 @@ function createMessage(messageData)
 	messageContainer.classList.add('messageContainer');
 	
 	
+	var sendDate = new Date(messageData.sendDate);
+	
+	var timeString = sendDate.toLocaleTimeString(undefined, {
+		hour: '2-digit',
+		minute: '2-digit'
+	})
+
 	var messageTitle = document.createElement("p");
 	messageTitle.classList.add('messageTitle');
-	messageTitle.innerHTML = messageData.username;
+	messageTitle.innerHTML = messageData.username + " - " + timeString;
 	
 	var messageContent = document.createElement("p");
 	messageContent.classList.add('messageContent');
@@ -418,7 +427,7 @@ function createMessage(messageData)
 	return messageContainer;
 }
 
-function channelChatResponse(data)
+function channelChatResponse(data, channelID)
 {
 	if (data != null)
 	{
@@ -430,10 +439,14 @@ function channelChatResponse(data)
 		console.log(response.length);
 		for (var i = 0; i < response.length; i++)
 		{
+			console.log("%% "+ response[i].sendDate);
 			var message = createMessage(response[i]);
 			console.log(message);
 			channelContainer.appendChild(message);
 		}
+		
+		//now connect to the socket for future messages...
+		connectToChannel(channelID);
 	}
 }
 
@@ -450,7 +463,7 @@ function getChannelChat()
        ajaxObj.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
                 console.log(" complete!");
-				channelChatResponse(this.responseText);
+				channelChatResponse(this.responseText, channelID);
             } else if (this.readyState == 4) {
                 console.log("Error, Couldn't get response");
             }
