@@ -293,7 +293,7 @@ li{
 }
 
 #channelSelect{
-	width:80%;
+	width: calc(100% - 70px);
 	padding:10px;
 	 border-radius: 10px;
 	 margin-bottom: 10px;
@@ -305,6 +305,7 @@ li{
 	border: 1px solid #000;
 	background-color: gray;
 	padding:10px;
+	height: calc(100vh - 200px);
 
 }
 
