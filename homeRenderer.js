@@ -4,7 +4,7 @@ var roomData;
 var roomIndex;
 var toastr = require("toastr");
 			
-socket = io.connect('http://localhost:9001', {
+socket = io.connect('https://noomamiddleware.azurewebsites.net/', {
 		'connect timeout': 5000,
 		'reconnectionAttempts': 3
 	});
@@ -29,6 +29,7 @@ socket.on('connect', function () {
 
 window.onload = function() {
 	
+	document.getElementById("userTxt").innerHTML = "User: " + localStorage.getItem("name");
 	var input = document.getElementById("searchRooms");
 	input.addEventListener("keyup", function(event) {
 	// Number 13 is the "Enter" key on the keyboard
@@ -75,7 +76,7 @@ function getRoomList(callback) {
 			searchInput = "";
 		}		
 		
-        ajaxObj.open("GET", "http://localhost:9001/rooms/"+userID+"?search="+searchInput, true);
+        ajaxObj.open("GET", "https://noomamiddleware.azurewebsites.net/rooms/"+userID+"?search="+searchInput, true);
         ajaxObj.setRequestHeader("Content-Type", "application/json");
 
         ajaxObj.send();
@@ -231,7 +232,7 @@ function saveRoomSettings()
 	var roomID = roomData[roomIndex].roomID;
 
 		
-	ajaxObj.open("PUT", "http://localhost:9001/rooms/"+roomID, true);
+	ajaxObj.open("PUT", "https://noomamiddleware.azurewebsites.net/rooms/"+roomID, true);
     ajaxObj.setRequestHeader("Content-Type", "application/json");
 	
 	var body = {};
@@ -291,7 +292,7 @@ function removeRoom()
         };
 		
 	var roomID = roomData[roomIndex].roomID;
-	ajaxObj.open("DELETE", "http://localhost:9001/rooms/"+roomID, true);
+	ajaxObj.open("DELETE", "https://noomamiddleware.azurewebsites.net/rooms/"+roomID, true);
     ajaxObj.setRequestHeader("Content-Type", "application/json");
 
     ajaxObj.send();
@@ -377,7 +378,7 @@ function addRoom()
             }
         };
 		
-	ajaxObj.open("POST", "http://localhost:9001/rooms/"+userID, true);
+	ajaxObj.open("POST", "https://noomamiddleware.azurewebsites.net/rooms/"+userID, true);
     ajaxObj.setRequestHeader("Content-Type", "application/json");
 	
 	var body = {};
@@ -469,7 +470,7 @@ function getChannelChat()
             }
         };
 		
-	ajaxObj.open("GET", "http://localhost:9001/channelMessages/"+channelID, true);
+	ajaxObj.open("GET", "https://noomamiddleware.azurewebsites.net/channelMessages/"+channelID, true);
     ajaxObj.setRequestHeader("Content-Type", "application/json");
 
 	ajaxObj.send();
@@ -516,7 +517,7 @@ function getChannels(roomID)
             }
         };
 		
-	ajaxObj.open("GET", "http://localhost:9001/channels/"+roomID, true);
+	ajaxObj.open("GET", "https://noomamiddleware.azurewebsites.net/channels/"+roomID, true);
     ajaxObj.setRequestHeader("Content-Type", "application/json");
 
 	ajaxObj.send();	
@@ -567,7 +568,7 @@ function confirmDeleteChannel(channelID)
             }
         };
 		
-	ajaxObj.open("DELETE", "http://localhost:9001/channel/"+channelID, true);
+	ajaxObj.open("DELETE", "https://noomamiddleware.azurewebsites.net/channel/"+channelID, true);
     ajaxObj.setRequestHeader("Content-Type", "application/json");
 
 	ajaxObj.send();		
@@ -640,7 +641,7 @@ function confirmAddChannel()
             }
         };
 		
-	ajaxObj.open("POST", "http://localhost:9001/channels/"+roomData[roomIndex].roomID, true);
+	ajaxObj.open("POST", "https://noomamiddleware.azurewebsites.net/channels/"+roomData[roomIndex].roomID, true);
     ajaxObj.setRequestHeader("Content-Type", "application/json");
 
 	var body = {};

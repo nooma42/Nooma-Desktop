@@ -10,9 +10,10 @@ function setResults(data) {
 		}
 		console.log(data);
 		var response = JSON.parse(data);
-		if (response.userID)
+		if (response.lecturerID)
 		{
-			localStorage.setItem("userID",response.userID)
+			localStorage.setItem("userID",response.lecturerID);
+			localStorage.setItem("name",response.name);
 			window.location.href = 'home.html'
 		}
 	}
@@ -30,7 +31,7 @@ function callAjax(callback) {
 		}
 	};
 		
-	ajaxObj.open("POST", "http://localhost:9001/authenticate/", true);
+	ajaxObj.open("POST", "https://noomamiddleware.azurewebsites.net/authenticateLecturer/", true);
 	ajaxObj.setRequestHeader("Content-Type", "application/json");
 	
 
@@ -94,7 +95,7 @@ function callAjax2(body, callback) {
 		}
 	};
 		
-	ajaxObj.open("POST", "http://localhost:9001/users/", true);
+	ajaxObj.open("POST", "https://noomamiddleware.azurewebsites.net/lecturer/", true);
 	ajaxObj.setRequestHeader("Content-Type", "application/json");
 	
 
