@@ -5,7 +5,8 @@ function setResults(data) {
 	{
 		if (data == "Error")
 		{
-			toastr.error("Problem logging in!");
+			document.getElementById("loginBtn").setAttribute("disabled", false);
+			toastr.error("Login Incorrect!");
 			return;
 		}
 		console.log(data);
@@ -52,6 +53,7 @@ function callAjax(callback) {
 
 function login() {
 	//window.location.href = 'home.html'
+	document.getElementById("loginBtn").setAttribute("disabled", true);
 	callAjax(setResults);
 }
 

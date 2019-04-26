@@ -354,6 +354,11 @@ li{
    margin-top: 5px;
 }
 
+
+#loginBtn[disabled="true"]{
+	background-color: grey;
+}
+
 .settingDiv {
 	background-color: #c7c8c9;
 	width: 100%;
