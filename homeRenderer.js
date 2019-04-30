@@ -203,18 +203,22 @@ function confirmRoomEdit(data)
 		console.log(response[0].status);
 		if (response[0].status == "Success")
 		{
-			
+			document.getElementById("settingSaveBtn").removeAttribute("disabled");
 			toastr.success("Room Edited Successfully!");
 			
 			clearRoomList();
 			getRoomList(createRoomList);
+		}
+		else
+		{
+			document.getElementById("settingSaveBtn").removeAttribute("disabled");
 		}
 	}	
 }
 
 function saveRoomSettings()
 {
-	
+	document.getElementById("settingSaveBtn").setAttribute("disabled", true);
 	var ajaxObj = new XMLHttpRequest();
 	ajaxObj.onreadystatechange = function() {
 		if (this.readyState == 4 && this.status == 200) {
@@ -268,6 +272,7 @@ function confirmRoomDeletion(data) {
 		console.log(response[0].status);
 		if (response[0].status == "Success")
 		{
+			document.getElementById("removeRoomBtn").removeAttribute("disabled");
 			toastr.success("Room Deleted Successfully!");
 			clearRoomList();
 			getRoomList(createRoomList);
@@ -275,11 +280,17 @@ function confirmRoomDeletion(data) {
 			roomIndex = null;
 			resetTabs();
 		}
+		else
+		{
+			document.getElementById("removeRoomBtn").removeAttribute("disabled");
+		}
 	}
 }
 
 function removeRoom()
 {
+	console.log("trying to remove room..");
+	document.getElementById("removeRoomBtn").setAttribute("disabled", true);
 	console.log("close");
 	 var ajaxObj = new XMLHttpRequest();
        ajaxObj.onreadystatechange = function() {
@@ -353,7 +364,7 @@ function confirmRoomAddition(data) {
 		console.log(response[0].status);
 		if (response[0].status == "Success")
 		{
-			
+			document.getElementById("addRoomModBtn").setAttribute("disabled", false);
 			toastr.success("Room Added Successfully!");
 			
 			var modal = document.getElementById('myModal');
@@ -362,12 +373,17 @@ function confirmRoomAddition(data) {
 			clearRoomList();
 			getRoomList(createRoomList);
 		}
+		else
+		{
+			document.getElementById("addRoomModBtn").setAttribute("disabled", false);
+		}
 	}
 }
 
 
 function addRoom()
 {
+	document.getElementById("addRoomModBtn").setAttribute("disabled", true);
 	 var ajaxObj = new XMLHttpRequest();
        ajaxObj.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
@@ -547,9 +563,14 @@ function channelDeleteResponse(data)
 		var response = JSON.parse(data);
 		if (response[0].status == "Success")
 		{
+			document.getElementById("deleteModalBtn").setAttribute("disabled", false);
 			toastr.success("Channel Deleted Successfully!");
 			closeModal();
 			getChannels(roomData[roomIndex].roomID);
+		}
+		else
+		{
+			document.getElementById("deleteModalBtn").setAttribute("disabled", false);
 		}
 	}
 }
@@ -557,6 +578,7 @@ function channelDeleteResponse(data)
 function confirmDeleteChannel(channelID)
 { 
 	console.log("delete channel id " + channelID);
+	document.getElementById("deleteModalBtn").setAttribute("disabled", true);
 	
 	 var ajaxObj = new XMLHttpRequest();
        ajaxObj.onreadystatechange = function() {
@@ -620,6 +642,7 @@ function channelAddResponse(data)
 		
 		if (response[0].status == "Success")
 		{
+			document.getElementById("addModalBtn").setAttribute("disabled", false);
 			toastr.success("Channel Added Successfully!");
 			closeModal();
 			getChannels(roomData[roomIndex].roomID);
@@ -630,6 +653,7 @@ function channelAddResponse(data)
 function confirmAddChannel()
 {
 	var channelName = document.getElementById("newChannelNameInput").value;
+	document.getElementById("addModalBtn").setAttribute("disabled", true);
 	
 	 var ajaxObj = new XMLHttpRequest();
        ajaxObj.onreadystatechange = function() {

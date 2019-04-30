@@ -29,6 +29,7 @@ function callAjax(callback) {
 		} 
 		else if (this.readyState == 4) {
 			console.log("Error, Couldn't get response");
+			document.getElementById("loginBtn").setAttribute("disabled", false);
 		}
 	};
 		
@@ -76,10 +77,12 @@ function setResults2(data) {
 		if (response[0].status == "Success")
 		{
 			registerBack();
+			document.getElementById("registerBtn").setAttribute("disabled", false);
 			toastr.success('Please sign in', "Registration Successful!");
 		}
 		else if  (response[0].status == "emailTaken")
 		{
+			document.getElementById("registerBtn").setAttribute("disabled", false);
 			toastr.error('That email is in use, please use a different email address', 'Email In Use!')
 		}
 	}
@@ -151,6 +154,7 @@ function register() {
 	body.lastName = lastName;
 	body.email = email;
 	body.pwd = pwd;
+	document.getElementById("registerBtn").setAttribute("disabled", true);
 	callAjax2(body, setResults2);
 }
 
