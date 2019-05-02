@@ -11,8 +11,12 @@ socket = io.connect('https://noomamiddleware.azurewebsites.net/', {
 	
 function connectToChannel(channelID)
 {
+	var obj = {};
+	obj.channelID = channelID;
+	var sendObj = JSON.stringify(obj);
+	
 	console.log("connecting to channel: " + channelID);
-	socket.emit('channel', channelID);
+	socket.emit('channel', JSON.parse(sendObj));
 }
 
 socket.on('connect', function () {
@@ -24,7 +28,7 @@ socket.on('connect', function () {
 		console.log(messageData.sendDate);
 		var msg = createMessage(messageData);
 		var channelContainer = document.getElementById("channelContainer");
-		channelContainer.insertBefore(msg, channelContainer.firstChild);
+		channelContainer.appendChild(msg);
 	});
 
 window.onload = function() {
@@ -421,12 +425,13 @@ function createMessage(messageData)
 	
 	var timeString = sendDate.toLocaleTimeString(undefined, {
 		hour: '2-digit',
-		minute: '2-digit'
+		minute: '2-digit',
+		second: '2-digit'
 	})
 
 	var messageTitle = document.createElement("p");
 	messageTitle.classList.add('messageTitle');
-	messageTitle.innerHTML = messageData.username + " - " + timeString;
+	messageTitle.innerHTML = messageData.username + " - " + messageData.sendDate;
 	
 	var messageContent = document.createElement("p");
 	messageContent.classList.add('messageContent');
@@ -454,7 +459,7 @@ function channelChatResponse(data, channelID)
 		var channelContainer = document.getElementById("channelContainer");
 		channelContainer.innerHTML = "";
 		console.log(response.length);
-		for (var i = 0; i < response.length; i++)
+		for (var i = response.length-1; i >= 0; i--)
 		{
 			console.log("%% "+ response[i].sendDate);
 			var message = createMessage(response[i]);
