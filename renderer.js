@@ -126,10 +126,20 @@ function register() {
 		toastr.error('Please enter your first name', 'First Name Missing!')
 		return;		
 	}
+	if (firstName.length > 50)
+	{
+		toastr.error('First Name entered is too long', 'First Name Too Long!')
+		return;		
+	}
 	if (lastName == "")
 	{
 		toastr.error('Please enter your last name', 'Last Name Missing!')
 		return;				
+	}
+	if (lastName.length > 50)
+	{
+		toastr.error('Last Name entered is too long', 'Last Name Too Long!')
+		return;		
 	}
 	if (email == "")
 	{
@@ -140,6 +150,17 @@ function register() {
 	{
 		toastr.error('Please enter your password', 'Password Missing!')
 		return;				
+	}
+	if (pwd.length < 8)
+	{
+		toastr.error('Please enter a password with atleast 8 characters', 'Password Too Short!')
+		return;					
+	}
+	//bcrypt max length limits here, 50 is sensible
+	if (pwd.length > 50)
+	{
+		toastr.error('Please enter a shorter password','Password Too Long')
+		return;	
 	}
 	else if (pwd != confirmPwd)
 	{

@@ -189,7 +189,8 @@ function roomSelect(roomElement) {
 	changeTab(null, "Channels");
 	document.getElementById("channelTab").className += " active";
 	
-	evt.currentTarget.className += " active";
+	if (evt != null)
+		evt.currentTarget.className += " active";
 }
 
 
@@ -212,7 +213,6 @@ function updateScroll(){
 
 function scrollHandler(){
 	var chatContainer = document.getElementById("channelContainer");
-	console.log(chatContainer.scrollTop +">"+ (chatContainer.scrollHeight - chatContainer.offsetHeight));
 	if (chatContainer.scrollTop > (chatContainer.scrollHeight - chatContainer.offsetHeight))
 		scrolled = false;
 	else
@@ -243,6 +243,21 @@ function confirmRoomEdit(data)
 
 function saveRoomSettings()
 {
+	var roomName = document.getElementById("roomNameInput").value;
+	var eventDate = document.getElementById("eventDateInput").value;
+	
+	if (roomName.length == 0)
+	{
+		toastr.warning("Please enter a Room name");
+		return;
+	}
+	if(roomName.length > 255)
+	{
+		toastr.warning("Room name too long");
+		return;		
+	}
+	
+	
 	document.getElementById("settingSaveBtn").setAttribute("disabled", true);
 	var ajaxObj = new XMLHttpRequest();
 	ajaxObj.onreadystatechange = function() {
@@ -255,8 +270,7 @@ function saveRoomSettings()
 	};
 	
 	console.log("save room settings!");
-	var roomName = document.getElementById("roomNameInput").value;
-	var eventDate = document.getElementById("eventDateInput").value;
+
 	
 	var roomID = roomData[roomIndex].roomID;
 
@@ -398,7 +412,6 @@ function addRoomOverlay()
 	roomDateInput.placeholder = "Event Date";
 	roomDateInput.readOnly = true;
 	roomDateInput.onclick = function(){openPicker(roomDateInput.id)}
-	
 	var addModalBtn  = document.createElement("button");
 	addModalBtn.id = "addRoomModBtn";
 	addModalBtn.onclick = function(){addRoom()};
@@ -442,6 +455,25 @@ function confirmRoomAddition(data) {
 
 function addRoom()
 {
+	var newRoomName = document.getElementById("newRoomNameInput").value;
+	var newRoomDate = document.getElementById("newRoomDateInput").value;
+	
+	if (newRoomName.length == 0)
+	{
+		toastr.warning("Please enter a Room name");
+		return;
+	}
+	if(newRoomName.length > 255)
+	{
+		toastr.warning("Room name too long");
+		return;		
+	}
+	if(newRoomDate.length == 0)
+	{
+		toastr.warning("Please select an Event Date");
+		return;		
+	}
+	
 	document.getElementById("addRoomModBtn").setAttribute("disabled", true);
 	 var ajaxObj = new XMLHttpRequest();
        ajaxObj.onreadystatechange = function() {
@@ -457,8 +489,7 @@ function addRoom()
     ajaxObj.setRequestHeader("Content-Type", "application/json");
 	
 	var body = {};
-	var newRoomName = document.getElementById("newRoomNameInput").value;
-	var newRoomDate = document.getElementById("newRoomDateInput").value;
+
 	
 	body.roomName = newRoomName;
 	body.eventDate = newRoomDate;
@@ -758,6 +789,17 @@ function channelAddResponse(data)
 function confirmAddChannel()
 {
 	var channelName = document.getElementById("newChannelNameInput").value;
+	if (channelName.length == 0)
+	{
+		toastr.warning("Please enter a Channel name");
+		return;
+	}
+	if(channelName.length > 255)
+	{
+		toastr.warning("Channel name too long");
+		return;		
+	}
+	
 	document.getElementById("addModalBtn").setAttribute("disabled", true);
 	
 	 var ajaxObj = new XMLHttpRequest();
@@ -857,7 +899,7 @@ function generatePowerPoint() {
 	
 	pptx.setTitle('Nooma Slide Creator');
 	slide.addText('Nooma', {x:1, y:1, fontSize:18, color:'673AB7'});
-	slide.addText("Enter JoinCode or scan the QR-Code to join the conversation!", {x:1,y:1.5, fontSize:12, color:'000000'});
+	slide.addText("Enter the Join Code or scan the QR-Code to join the conversation!", {x:1,y:1.5, fontSize:12, color:'000000'});
 	slide.addText("Join Code: " + joinCode, {x:1,y:2, fontSize:25, color:'000000'});
 	slide.addImage({ data:QRData, x:6, y:1, w:4.0, h:4.0 });
 	pptx.save('Nooma - ' + roomData[roomIndex].roomName);
