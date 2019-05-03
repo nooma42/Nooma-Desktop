@@ -3,7 +3,8 @@ var userID;
 var roomData;
 var roomIndex;
 var toastr = require("toastr");
-			
+var scrolled = false;
+
 socket = io.connect('https://noomamiddleware.azurewebsites.net/', {
 		'connect timeout': 5000,
 		'reconnectionAttempts': 3
@@ -29,6 +30,7 @@ socket.on('connect', function () {
 		var msg = createMessage(messageData);
 		var channelContainer = document.getElementById("channelContainer");
 		channelContainer.appendChild(msg);
+		updateScroll();
 	});
 
 window.onload = function() {
@@ -151,7 +153,8 @@ function changeTab(evt, tabName) {
 	})	  
   }
   document.getElementById(tabName).style.display = "block";
-  evt.currentTarget.className += " active";
+  if(evt != null)
+	evt.currentTarget.className += " active";
 }
 
 function roomSelect(roomElement) {
@@ -184,6 +187,9 @@ function roomSelect(roomElement) {
 	setTitle(roomData[roomIndex].roomName);
 	getChannels(roomData[roomIndex].roomID);
 	changeTab(null, "Channels");
+	document.getElementById("channelTab").className += " active";
+	
+	evt.currentTarget.className += " active";
 }
 
 
@@ -197,6 +203,21 @@ function logout()
 	window.location.href = 'index.html'
 }
 
+function updateScroll(){
+    var chatContainer = document.getElementById("channelContainer");
+	if (!scrolled)
+		chatContainer.scrollTop = chatContainer.scrollHeight;
+}
+
+
+function scrollHandler(){
+	var chatContainer = document.getElementById("channelContainer");
+	console.log(chatContainer.scrollTop +">"+ (chatContainer.scrollHeight - chatContainer.offsetHeight));
+	if (chatContainer.scrollTop > (chatContainer.scrollHeight - chatContainer.offsetHeight))
+		scrolled = false;
+	else
+		scrolled = true;
+}
 
 function confirmRoomEdit(data)
 {
@@ -209,7 +230,7 @@ function confirmRoomEdit(data)
 		{
 			document.getElementById("settingSaveBtn").removeAttribute("disabled");
 			toastr.success("Room Edited Successfully!");
-			
+			setTitle(document.getElementById("roomNameInput").value);
 			clearRoomList();
 			getRoomList(createRoomList);
 		}
@@ -276,25 +297,59 @@ function confirmRoomDeletion(data) {
 		console.log(response[0].status);
 		if (response[0].status == "Success")
 		{
+			document.getElementById("deleteModalBtn").setAttribute("disabled", false);
 			document.getElementById("removeRoomBtn").removeAttribute("disabled");
 			toastr.success("Room Deleted Successfully!");
 			clearRoomList();
 			getRoomList(createRoomList);
 			setTitle("");
 			roomIndex = null;
+			closeModal();
 			resetTabs();
 		}
 		else
 		{
+			document.getElementById("deleteModalBtn").setAttribute("disabled", false);
 			document.getElementById("removeRoomBtn").removeAttribute("disabled");
 		}
 	}
 }
-
-function removeRoom()
+function deleteRoom()
 {
+	var modalContent = document.createElement("div");
+	modalContent.classList.add('modal-content');
+
+	var closeModalBtn = document.createElement("span");
+	closeModalBtn.classList.add('close');
+	closeModalBtn.innerHTML = "&times;";
+	closeModalBtn.onclick = function() {closeModal()};
+	
+	var modalTitle = document.createElement("p");
+	modalTitle.classList.add('popupTitle');
+	modalTitle.innerHTML = "Delete Room";
+	
+	var deleteModalContent = document.createElement("p");
+	deleteModalContent.id = "modalText";
+	deleteModalContent.innerHTML = "Are you sure you want to delete the \"" + roomData[roomIndex].roomName + "\" room?";
+	
+	var deleteModalBtn = document.createElement("button");
+	deleteModalBtn.id = "deleteModalBtn";
+	var roomID = roomData[roomIndex].roomID;
+	deleteModalBtn.onclick = function(){confirmDeleteRoom(roomID)};
+	deleteModalBtn.innerHTML = "Delete Room";
+	
+	modalContent.appendChild(closeModalBtn);
+	modalContent.appendChild(modalTitle);
+	modalContent.appendChild(deleteModalContent);
+	modalContent.appendChild(deleteModalBtn);
+	
+	createModal(modalContent);
+}
+
+function confirmDeleteRoom(roomID)
+{
+		document.getElementById("deleteModalBtn").setAttribute("disabled", true);
 	console.log("trying to remove room..");
-	document.getElementById("removeRoomBtn").setAttribute("disabled", true);
 	console.log("close");
 	 var ajaxObj = new XMLHttpRequest();
        ajaxObj.onreadystatechange = function() {
@@ -438,15 +493,60 @@ function createMessage(messageData)
 	messageContent.innerHTML = messageData.messageContent;
 	
 	var deleteBtn = document.createElement("img");
+	deleteBtn.id = messageData.messageID;
 	deleteBtn.classList.add('deleteMsgBtn');
 	deleteBtn.src = "assets/cancel.svg";
-	deleteBtn.onclick = "removeMessage()";
+	deleteBtn.onclick = function(){removeMessage(this.id)};
 	
 	messageContainer.appendChild(messageTitle);
 	messageContainer.appendChild(messageContent);
 	messageContainer.appendChild(deleteBtn);
 	
 	return messageContainer;
+}
+
+function animateDeleteMessage(messageID) {
+  $('#'+messageID).parent().animate({opacity: '0'}, 300, function(){
+     $('#'+messageID).parent().animate({height: '0px'}, 300, function(){
+       $('#'+messageID).parent().remove();
+    });
+  });
+}
+function removeMessageResponse(data, messageID)
+{
+	if (data != null)
+	{
+		var response = JSON.parse(data);
+		if (response[0].status == "Success")
+		{
+			//var msgToDelete = document.getElementById(messageID);
+			//msgToDelete.parentNode.remove();
+			animateDeleteMessage(messageID)
+			toastr.success("Message Deleted Successfully!");
+		}
+		else
+		{
+		}
+	}
+}
+
+function removeMessage(messageID)
+{
+	console.log("click");
+	 var ajaxObj = new XMLHttpRequest();
+       ajaxObj.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                console.log(" complete!");
+				removeMessageResponse(this.responseText, messageID);
+            } else if (this.readyState == 4) {
+                console.log("Error, Couldn't get response");
+            }
+        };
+		
+	ajaxObj.open("DELETE", "https://noomamiddleware.azurewebsites.net/channelMessage/"+messageID, true);
+    ajaxObj.setRequestHeader("Content-Type", "application/json");
+
+	ajaxObj.send();	
 }
 
 function channelChatResponse(data, channelID)
@@ -466,7 +566,7 @@ function channelChatResponse(data, channelID)
 			console.log(message);
 			channelContainer.appendChild(message);
 		}
-		
+		updateScroll();
 		//now connect to the socket for future messages...
 		connectToChannel(channelID);
 	}
@@ -709,4 +809,56 @@ function addChannel()
 	modalContent.appendChild(addModalBtn);
 
 	createModal(modalContent);
+}
+
+function copyQR() 
+{
+	var canvas = document.getElementById('qrCanvas');
+	console.log("canvas click");
+	var img = document.createElement('img');
+	img.src = canvas.toDataURL()
+		
+	var div = document.createElement('div');
+	div.contentEditable = true;
+	div.appendChild(img);
+	document.body.appendChild(div);
+
+	SelectText(div);
+	document.execCommand('Copy');
+	document.body.removeChild(div);
+	toastr.success("QR code image copied to clipboard!");
+	
+}
+
+function SelectText(element) {
+    var doc = document;
+    if (doc.body.createTextRange) {
+        var range = document.body.createTextRange();
+        range.moveToElementText(element);
+        range.select();
+    } else if (window.getSelection) {
+        var selection = window.getSelection();
+        var range = document.createRange();
+        range.selectNodeContents(element);
+        selection.removeAllRanges();
+        selection.addRange(range);
+    }
+}
+
+function generatePowerPoint() {
+	var PptxGenJS = require("pptxgenjs");
+	var pptx = new PptxGenJS();
+	var slide = pptx.addNewSlide();
+	
+	
+	var joinCode = roomData[roomIndex].joinCode;
+	var canvas = document.getElementById('qrCanvas');
+	var QRData = canvas.toDataURL();
+	
+	pptx.setTitle('Nooma Slide Creator');
+	slide.addText('Nooma', {x:1, y:1, fontSize:18, color:'673AB7'});
+	slide.addText("Enter JoinCode or scan the QR-Code to join the conversation!", {x:1,y:1.5, fontSize:12, color:'000000'});
+	slide.addText("Join Code: " + joinCode, {x:1,y:2, fontSize:25, color:'000000'});
+	slide.addImage({ data:QRData, x:6, y:1, w:4.0, h:4.0 });
+	pptx.save('Nooma - ' + roomData[roomIndex].roomName);
 }
