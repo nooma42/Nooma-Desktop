@@ -148,6 +148,11 @@ function register() {
 		toastr.error('Please enter your email address', 'Email Missing!')
 		return;				
 	}
+	if (!validateEmail(email))
+	{
+		toastr.error('Please enter a valid email address', 'Email Invalid!')
+		return;						
+	}
 	if (pwd == "")
 	{
 		toastr.error('Please enter your password', 'Password Missing!')
@@ -179,6 +184,11 @@ function register() {
 	body.pwd = pwd;
 	document.getElementById("registerBtn").setAttribute("disabled", true);
 	callAjax2(body, setResults2);
+}
+
+function validateEmail(email) {
+    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
 }
 
 function clearRegisterForm()
