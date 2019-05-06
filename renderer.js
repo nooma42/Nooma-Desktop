@@ -5,7 +5,7 @@ function setResults(data) {
 	{
 		if (data == "Error")
 		{
-			document.getElementById("loginBtn").setAttribute("disabled", false);
+			document.getElementById("loginBtn").removeAttribute("disabled");
 			toastr.error("Login Incorrect!");
 			return;
 		}
@@ -29,7 +29,7 @@ function callAjax(callback) {
 		} 
 		else if (this.readyState == 4) {
 			console.log("Error, Couldn't get response");
-			document.getElementById("loginBtn").setAttribute("disabled", false);
+			document.getElementById("loginBtn").removeAttribute("disabled");
 		}
 	};
 		
@@ -64,6 +64,7 @@ function openRegister() {
 }
 
 function registerBack() {
+	clearRegisterForm();
 	document.getElementById("registerContainer").style.display = "none";
 	document.getElementById("loginContainer").style.display = "block";
 }
@@ -77,12 +78,13 @@ function setResults2(data) {
 		if (response[0].status == "Success")
 		{
 			registerBack();
-			document.getElementById("registerBtn").setAttribute("disabled", false);
+			document.getElementById("registerBtn").removeAttribute("disabled");
 			toastr.success('Please sign in', "Registration Successful!");
+			clearRegisterForm();
 		}
 		else if  (response[0].status == "emailTaken")
 		{
-			document.getElementById("registerBtn").setAttribute("disabled", false);
+			document.getElementById("registerBtn").removeAttribute("disabled");
 			toastr.error('That email is in use, please use a different email address', 'Email In Use!')
 		}
 	}
@@ -179,3 +181,11 @@ function register() {
 	callAjax2(body, setResults2);
 }
 
+function clearRegisterForm()
+{
+	document.getElementById("firstNameInput").value = "";
+	document.getElementById("lastNameInput").value = "";
+	document.getElementById("rEmailInput").value = "";
+	document.getElementById("pwdInput").value = "";
+	document.getElementById("confirmPwdInput").value = "";	
+}

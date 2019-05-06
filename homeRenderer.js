@@ -311,7 +311,7 @@ function confirmRoomDeletion(data) {
 		console.log(response[0].status);
 		if (response[0].status == "Success")
 		{
-			document.getElementById("deleteModalBtn").setAttribute("disabled", false);
+			document.getElementById("deleteModalBtn").removeAttribute("disabled");
 			document.getElementById("removeRoomBtn").removeAttribute("disabled");
 			toastr.success("Room Deleted Successfully!");
 			clearRoomList();
@@ -323,7 +323,7 @@ function confirmRoomDeletion(data) {
 		}
 		else
 		{
-			document.getElementById("deleteModalBtn").setAttribute("disabled", false);
+			document.getElementById("deleteModalBtn").removeAttribute("disabled");
 			document.getElementById("removeRoomBtn").removeAttribute("disabled");
 		}
 	}
@@ -436,7 +436,7 @@ function confirmRoomAddition(data) {
 		console.log(response[0].status);
 		if (response[0].status == "Success")
 		{
-			document.getElementById("addRoomModBtn").setAttribute("disabled", false);
+			document.getElementById("addRoomModBtn").removeAttribute("disabled");
 			toastr.success("Room Added Successfully!");
 			
 			var modal = document.getElementById('myModal');
@@ -447,7 +447,7 @@ function confirmRoomAddition(data) {
 		}
 		else
 		{
-			document.getElementById("addRoomModBtn").setAttribute("disabled", false);
+			document.getElementById("addRoomModBtn").removeAttribute("disabled");
 		}
 	}
 }
@@ -699,14 +699,14 @@ function channelDeleteResponse(data)
 		var response = JSON.parse(data);
 		if (response[0].status == "Success")
 		{
-			document.getElementById("deleteModalBtn").setAttribute("disabled", false);
+			document.getElementById("deleteModalBtn").removeAttribute("disabled");
 			toastr.success("Channel Deleted Successfully!");
 			closeModal();
 			getChannels(roomData[roomIndex].roomID);
 		}
 		else
 		{
-			document.getElementById("deleteModalBtn").setAttribute("disabled", false);
+			document.getElementById("deleteModalBtn").removeAttribute("disabled");
 		}
 	}
 }
@@ -778,7 +778,7 @@ function channelAddResponse(data)
 		
 		if (response[0].status == "Success")
 		{
-			document.getElementById("addModalBtn").setAttribute("disabled", false);
+			document.getElementById("addModalBtn").removeAttribute("disabled");
 			toastr.success("Channel Added Successfully!");
 			closeModal();
 			getChannels(roomData[roomIndex].roomID);
