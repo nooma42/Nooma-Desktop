@@ -54,6 +54,19 @@ function callAjax(callback) {
 
 function login() {
 	//window.location.href = 'home.html'
+	var email = document.getElementById("emailInput").value;
+	var pwd = document.getElementById("passwordInput").value;
+	
+	if (email.length == "")
+	{
+		toastr.error('Please enter your email address', 'Email Missing!')
+		return;						
+	}
+	if (pwd == "")
+	{
+		toastr.error('Please enter your password', 'Password Missing!')
+		return;						
+	}
 	document.getElementById("loginBtn").setAttribute("disabled", true);
 	callAjax(setResults);
 }
