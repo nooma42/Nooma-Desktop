@@ -52,6 +52,7 @@ window.onload = function() {
 	userID = localStorage.getItem("userID");
 	console.log("loaded page! " + userID);
 	clearRoomList();
+	resetTabs("fast");
 	getRoomList(createRoomList);
 };
 
@@ -289,9 +290,9 @@ function saveRoomSettings()
 }
 
 
-function resetTabs()
+function resetTabs(speed)
 {
- $( "#tabs" ).hide( "slide", { direction: "up" }, "slow" );
+ $( "#tabs" ).hide( "slide", { direction: "up" }, speed );
   var i, tabcontent, tablinks;
   tabcontent = document.getElementsByClassName("tabcontent");
   for (i = 0; i < tabcontent.length; i++) {
@@ -319,7 +320,7 @@ function confirmRoomDeletion(data) {
 			setTitle("");
 			roomIndex = null;
 			closeModal();
-			resetTabs();
+			resetTabs("slow");
 		}
 		else
 		{

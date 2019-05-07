@@ -158,6 +158,14 @@ li{
 	align-content: flex-start
 }
 
+#listTitle {
+	margin-top:5px;
+	margin-left: 5px;
+	color: white;
+	font-weight: bold; 
+	font-size: 18;
+}
+
 #topBar {
 	float: right;
 	width: calc(100% - 260px);
