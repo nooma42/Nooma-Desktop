@@ -43,7 +43,6 @@ window.onload = function() {
             // Cancel the default action, if needed
             event.preventDefault();
             // Trigger the button element with a click
-            clearRoomList();
             getRoomList(createRoomList);
         }
     });
@@ -92,6 +91,7 @@ function getRoomList(callback) {
 
 function createRoomList(data) {
     if (data != null) {
+		clearRoomList();
         roomData = JSON.parse(data);
         console.log(roomData);
 

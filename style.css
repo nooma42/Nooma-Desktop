@@ -412,7 +412,8 @@
      height: calc(100vh - 190px);
 }
  #roomList::-webkit-scrollbar {
-     display: none;
+
+	 width: 10px;
 }
  #Default {
      display: block;
