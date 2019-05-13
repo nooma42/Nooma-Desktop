@@ -16,9 +16,9 @@ function createWindow () {
   icon: img
   });
   
-  let devtools = new BrowserWindow();
-   win.webContents.setDevToolsWebContents(devtools.webContents)
-  win.webContents.openDevTools({mode: 'detach'});
+  //let devtools = new BrowserWindow();
+  //win.webContents.setDevToolsWebContents(devtools.webContents)
+  //win.webContents.openDevTools({mode: 'detach'});
   
   win.setMenuBarVisibility(false)
   // and load the index.html of the app.
