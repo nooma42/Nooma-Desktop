@@ -1,31 +1,31 @@
-     <!DOCTYPE html>
-     <html>
-         <head>
-			 <link rel="stylesheet" href="style.css">
-             <title>Nooma</title>
-			 <script src="renderer.js"></script>
-			 <link rel="stylesheet" href="node_modules/toastr/build/toastr.css">
-         </head>
-         <body>
-			<div id="loginBox">
-				<div id="loginContainer">
-					<img id="logo" src="assets/logo.svg" alt="">
-					<input id="emailInput" class="loginInput" type="text" placeholder="Email" name="email" value="">
-					<input id="passwordInput" class="loginInput" type="password" placeholder="Password" name="password" value="">
-					<p class="loginText">Forgot Password?</p>
-					<button id="loginBtn" class= "indexBtn" onclick="login()">Login</button>
-					<p class="loginText" onclick="openRegister()">Don't have an account? Sign Up</p>
-				</div>
-				<div id="registerContainer">
-					<img id="backRegister" src="assets/back.svg" alt="" onclick="registerBack()">
-					<p>Register</p>
-					<input id="firstNameInput" class="loginInput" type="text" placeholder="First Name" name="firstName">
-					<input id="lastNameInput" class="loginInput" type="text" placeholder="Last Name" name="lastName">
-					<input id="rEmailInput" class="loginInput" type="text" placeholder="Email" name="email">
-					<input id="pwdInput" class="loginInput" type="password" placeholder="Password" name="password">
-					<input id="confirmPwdInput" class="loginInput" type="password" placeholder="Confirm Password" name="confirmPassword">
-					<button id="registerBtn" class= "indexBtn" onclick="register()">Register</button>
-				</div>
-			</div>
-         </body>
-     </html>
+<!DOCTYPE html>
+<html>
+   <head>
+      <link rel="stylesheet" href="style.css">
+      <title>Nooma</title>
+      <script src="renderer.js"></script>
+      <link rel="stylesheet" href="node_modules/toastr/build/toastr.css">
+   </head>
+   <body>
+      <div id="loginBox">
+         <div id="loginContainer">
+            <img id="logo" src="assets/logo.svg" alt="">
+            <input id="emailInput" class="loginInput" type="text" placeholder="Email" name="email" value="">
+            <input id="passwordInput" class="loginInput" type="password" placeholder="Password" name="password" value="">
+            <p class="loginText">Forgot Password?</p>
+            <button id="loginBtn" class= "indexBtn" onclick="login()">Login</button>
+            <p class="loginText" onclick="openRegister()">Don't have an account? Sign Up</p>
+         </div>
+         <div id="registerContainer">
+            <img id="backRegister" src="assets/back.svg" alt="" onclick="registerBack()">
+            <p>Register</p>
+            <input id="firstNameInput" class="loginInput" type="text" placeholder="First Name" name="firstName">
+            <input id="lastNameInput" class="loginInput" type="text" placeholder="Last Name" name="lastName">
+            <input id="rEmailInput" class="loginInput" type="text" placeholder="Email" name="email">
+            <input id="pwdInput" class="loginInput" type="password" placeholder="Password" name="password">
+            <input id="confirmPwdInput" class="loginInput" type="password" placeholder="Confirm Password" name="confirmPassword">
+            <button id="registerBtn" class= "indexBtn" onclick="register()">Register</button>
+         </div>
+      </div>
+   </body>
+</html>

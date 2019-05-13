@@ -4,19 +4,19 @@
       <link rel="stylesheet" href="style.css">
       <link href="toastr.css" rel="stylesheet"/>
       <title>Nooma</title>
-	  <script>window.$ = window.jQuery = require('./jquery-3.3.1.min.js');</script>
-	  <script src="./jquery-ui.min.js"></script>
+      <script>window.$ = window.jQuery = require('./jquery-3.3.1.min.js');</script>
+      <script src="./jquery-ui.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
       <script src="homeRenderer.js"></script>
-	  <link rel="stylesheet" href="jquery-ui.min.css">
-	  <link rel="stylesheet" href="jquery-ui.min.css">
+      <link rel="stylesheet" href="jquery-ui.min.css">
+      <link rel="stylesheet" href="jquery-ui.min.css">
       <link rel="stylesheet" href="node_modules/toastr/build/toastr.css">
    </head>
    <body style="background-color: #FFFFFF;">
       <div id="sideBar">
          <input id="searchRooms" class="searchInput" type="text" placeholder="Search Rooms..." name="searchRooms" value="">
          <img id="addRoomBtn" onclick="addRoomOverlay()" src="assets/add.svg" alt="" height="40" width="40">
-		 <p id="listTitle">Your Rooms</p>
+         <p id="listTitle">Your Rooms</p>
          <ul id="roomList" style="list-style-type:none;">
          </ul>
          <div class="footer">
@@ -40,7 +40,7 @@
                <input id="joinCode" readonly="readonly" class="searchInput" type="text" placeholder="Join Code" name="searchRooms">
             </div>
             <canvas id="qrCanvas" onclick="copyQR()"></canvas>
-			<button id="generatePP" onclick="generatePowerPoint()">Generate PowerPoint Slide</button>
+            <button id="generatePP" onclick="generatePowerPoint()">Generate PowerPoint Slide</button>
             <p id="joinCodeTxt">Use this Join Code in your presentation to allow users to contribute via their phones.</p>
          </div>
          <div id="Channels" class="tabcontent">
@@ -112,9 +112,9 @@
          <div class="modal-content">
             <span class="close" onclick="closeModal()">&times;</span>
             <p class="popupTitle">Add Room</p>
-			<input id="newRoomNameInput" class="" type="text" placeholder="Room Name" name="newRoomName">
-			<input id="newRoomDateInput" class="" type="text" placeholder="Event Date" name="newRoomDate">
-			<button id="addRoomModBtn" onclick="addRoom()">Add Room</button>
+            <input id="newRoomNameInput" class="" type="text" placeholder="Room Name" name="newRoomName">
+            <input id="newRoomDateInput" class="" type="text" placeholder="Event Date" name="newRoomDate">
+            <button id="addRoomModBtn" onclick="addRoom()">Add Room</button>
          </div>
       </div>
    </body>
